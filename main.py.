@@ -1,0 +1,20 @@
+from fastapi import FastAPI
+from routes import estimate, excel, cad
+
+app = FastAPI(
+    title="Sajal's Estimator",
+    description="AI Construction Cost Estimator",
+    version="1.0"
+)
+
+app.include_router(estimate.router)
+app.include_router(excel.router)
+app.include_router(cad.router)
+
+@app.get("/")
+def home():
+    return {
+        "project":"Sajal's Estimator",
+        "assistant":"Estimator",
+        "status":"Running"
+    }
