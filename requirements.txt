@@ -1,7 +1,7 @@
-fastapi
-uvicorn
-pandas
-openpyxl
-dxfgrabber
-python-multipart
-requests
+fastapi==0.110.0
+uvicorn==0.29.0
+pandas==2.2.2
+openpyxl==3.1.2
+dxfgrabber==1.0.1
+python-multipart==0.0.9
+requests==2.31.0
