@@ -4,3 +4,4 @@ pandas
 openpyxl
 dxfgrabber
 python-multipart
+requests
