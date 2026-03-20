@@ -16,7 +16,7 @@ def ask_estimator(user_input):
     }
 
     data = {
-        "model": "llama3-70b-8192",
+        "model": "mixtral-8x7b-32768",
         "messages": [
             {"role": "system", "content": "You are a civil engineering estimator."},
             {"role": "user", "content": user_input}
