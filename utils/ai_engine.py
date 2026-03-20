@@ -18,16 +18,25 @@ def ask_estimator(user_input):
     data = {
         "model": "mixtral-8x7b-32768",
         "messages": [
-            {"role": "system", "content": "You are a civil engineering estimator."},
-            {"role": "user", "content": user_input}
+            {
+                "role": "system",
+                "content": "You are Estimator, an expert civil engineer."
+            },
+            {
+                "role": "user",
+                "content": user_input
+            }
         ]
     }
 
     response = requests.post(url, headers=headers, json=data)
 
+    print("STATUS:", response.status_code)
+    print("RAW RESPONSE:", response.text)  # 🔥 IMPORTANT
+
     result = response.json()
 
     if "choices" not in result:
-        raise Exception(f"AI Error: {result}")
+        raise Exception(f"AI ERROR: {result}")
 
     return result["choices"][0]["message"]["content"]
