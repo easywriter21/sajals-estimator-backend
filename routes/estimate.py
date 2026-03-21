@@ -7,25 +7,31 @@ router = APIRouter(prefix="/estimate")
 @router.post("/")
 def estimate(data: dict):
 
-    user_text = data.get("text", "")
+    # 🔹 Step 1: Accurate calculation (MAIN LOGIC)
+    calculation = calculate_cost(data)
 
+    # 🔹 Step 2: AI explanation (secondary)
     try:
-        # AI estimation
-        ai_response = ask_estimator(user_text)
+        explanation = ask_estimator(
+            f"""
+Explain this construction estimate clearly for a civil engineering student:
+
+{calculation}
+"""
+        )
 
         return {
             "assistant": "Estimator",
-            "type": "AI",
-            "response": ai_response
+            "type": "hybrid",
+            "data": calculation,
+            "ai_explanation": explanation
         }
 
     except Exception as e:
-        # fallback calculation if AI fails
-        fallback = calculate_cost(data)
-
+        # If AI fails, still return correct calculation
         return {
             "assistant": "Estimator",
-            "type": "fallback",
+            "type": "calculation_only",
             "error": str(e),
-            "result": fallback
+            "data": calculation
         }
