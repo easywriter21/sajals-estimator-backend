@@ -1,28 +1,27 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, UploadFile, File
 import dxfgrabber
 import math
 
 router = APIRouter(prefix="/cad")
 
-@router.post("/")
-def read_cad(file_path: str):
+@router.post("/upload-dwg")
+def upload_dwg(file: UploadFile = File(...)):
 
-    drawing = dxfgrabber.readfile(file_path)
+    path = f"temp_{file.filename}"
 
-    lines = []
+    with open(path, "wb") as f:
+        f.write(file.file.read())
+
+    drawing = dxfgrabber.readfile(path)
+
+    total_length = 0
 
     for entity in drawing.entities:
-
         if entity.dxftype == "LINE":
-
             dx = entity.end[0] - entity.start[0]
             dy = entity.end[1] - entity.start[1]
-
-            length = math.sqrt(dx*dx + dy*dy)
-
-            lines.append(length)
+            total_length += math.sqrt(dx*dx + dy*dy)
 
     return {
-        "assistant": "Estimator",
-        "detected_wall_lengths": lines
+        "detected_wall_length": round(total_length, 2)
     }
