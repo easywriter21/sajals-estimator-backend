@@ -1,14 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import estimate, excel, cad
 
-app = FastAPI(
-    title="Sajal's Estimator",
-    description="AI Civil Engineering Estimator Backend",
-    version="1.0"
-)
+from routes import estimate, excel, cad, pdf
 
-# Allow frontend connection
+app = FastAPI(title="Sajal's Estimator")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,11 +16,12 @@ app.add_middleware(
 app.include_router(estimate.router)
 app.include_router(excel.router)
 app.include_router(cad.router)
+app.include_router(pdf.router)
 
 @app.get("/")
 def home():
     return {
         "project": "Sajal's Estimator",
         "assistant": "Estimator",
-        "status": "Backend Running"
+        "status": "Running"
     }
