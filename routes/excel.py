@@ -2,6 +2,8 @@ from fastapi import APIRouter
 from fastapi.responses import FileResponse
 import pandas as pd
 from utils.cost_calculator import calculate_cost
+from openpyxl import load_workbook
+from openpyxl.styles import Font
 
 router = APIRouter(prefix="/excel")
 
@@ -9,17 +11,19 @@ router = APIRouter(prefix="/excel")
 def export_excel(data: dict):
 
     result = calculate_cost(data)
-    boq = result["boq"]
+    df = pd.DataFrame(result["boq"])
 
-    df = pd.DataFrame(boq)
-
-    file_name = "Sajals_Estimator_BOQ.xlsx"
+    file_name = "BOQ.xlsx"
 
     df.to_excel(file_name, index=False)
 
-    # 🔥 IMPORTANT: RETURN FILE ONLY
-    return FileResponse(
-        path=file_name,
-        media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        filename=file_name
-    )
+    wb = load_workbook(file_name)
+    ws = wb.active
+
+    # Bold header
+    for cell in ws[1]:
+        cell.font = Font(bold=True)
+
+    wb.save(file_name)
+
+    return FileResponse(file_name, filename=file_name)
