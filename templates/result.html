@@ -1,15 +1,86 @@
 <!DOCTYPE html>
 <html>
+<head>
+<title>Estimation Result</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
 <body>
 
-<h2>Result</h2>
+<div class="container">
 
-<pre>{{ data }}</pre>
+<h1>📊 Estimation Result</h1>
 
-<h3>AI</h3>
+<!-- SUMMARY CARDS -->
+<div class="grid">
+
+<div class="card">
+<h3>Total Area</h3>
+<p>{{ data.total_area }} sq ft</p>
+</div>
+
+<div class="card">
+<h3>Cost / sq ft</h3>
+<p>₹ {{ data.cost_per_sqft }}</p>
+</div>
+
+<div class="card">
+<h3>Total Cost</h3>
+<p>₹ {{ data.estimated_cost }}</p>
+</div>
+
+<div class="card">
+<h3>Duration</h3>
+<p>{{ data.duration_days }} days</p>
+</div>
+
+</div>
+
+<!-- MATERIALS -->
+<div class="card">
+<h2>🧱 Materials</h2>
+<ul>
+<li>Cement: {{ data.cement_bags }} bags</li>
+<li>Steel: {{ data.steel_kg }} kg</li>
+</ul>
+</div>
+
+<!-- BOQ TABLE -->
+<div class="card">
+<h2>📋 BOQ Table</h2>
+
+<table>
+<tr>
+<th>Item</th>
+<th>Unit</th>
+<th>Qty</th>
+<th>Rate</th>
+<th>Cost</th>
+</tr>
+
+{% for item in data.boq %}
+<tr>
+<td>{{ item.item }}</td>
+<td>{{ item.unit }}</td>
+<td>{{ item.quantity }}</td>
+<td>{{ item.rate }}</td>
+<td>{{ item.cost }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+</div>
+
+<!-- AI OUTPUT -->
+<div class="card">
+<h2>🤖 AI Explanation</h2>
 <pre>{{ explanation }}</pre>
+</div>
 
-<a href="/">Back</a>
+<a href="/" class="btn">⬅ Back</a>
+
+</div>
 
 </body>
 </html>
