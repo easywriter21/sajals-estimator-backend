@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sajal's Estimator</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<h1>Sajal's Estimator</h1>
+
+<form action="/estimate/estimate-ui/" method="post">
+
+<textarea name="text"></textarea>
+
+<input name="builtUpArea" placeholder="Area">
+<input name="floors" placeholder="Floors">
+<input name="budget" placeholder="Budget">
+<input name="duration" placeholder="Duration">
+
+<button>Estimate</button>
+
+</form>
+
+<form action="/excel/" method="post">
+<input name="builtUpArea" placeholder="Area">
+<input name="floors" placeholder="Floors">
+<button>Download Excel</button>
+</form>
+
+</body>
+</html>
