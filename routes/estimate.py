@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Form, Request
 from fastapi.templating import Jinja2Templates
 
-from services.ai_engine import generate_estimate
+from utils.ai_engine import generate_estimate   # ✅ FIXED
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
