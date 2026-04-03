@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import FileResponse
-from services.cost_calculator import generate_excel
+
+from utils.cost_calculator import generate_excel   # ✅ FIXED
 
 router = APIRouter()
 
