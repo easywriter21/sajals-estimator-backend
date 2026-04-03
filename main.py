@@ -1,27 +1,22 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from routes import estimate, excel, cad, pdf
 
-app = FastAPI(title="Sajal's Estimator")
+app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Static + Templates
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
+# Routes
 app.include_router(estimate.router)
 app.include_router(excel.router)
 app.include_router(cad.router)
 app.include_router(pdf.router)
 
+
 @app.get("/")
-def home():
-    return {
-        "project": "Sajal's Estimator",
-        "assistant": "Estimator",
-        "status": "Running"
-    }
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
