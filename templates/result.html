@@ -1,84 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Estimation Result</title>
 <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
 <div class="container">
 
-<h1>📊 Estimation Result</h1>
+<h1>Result</h1>
 
-<!-- SUMMARY CARDS -->
-<div class="grid">
+<p>Total Cost: ₹{{ result.total_cost }}</p>
+<p>Material: ₹{{ result.material_cost }}</p>
+<p>Labour: ₹{{ result.labour_cost }}</p>
 
-<div class="card">
-<h3>Total Area</h3>
-<p>{{ data.total_area }} sq ft</p>
-</div>
+<p>Cement: {{ result.cement_bags }} bags</p>
+<p>Steel: {{ result.steel_kg }} kg</p>
 
-<div class="card">
-<h3>Cost / sq ft</h3>
-<p>₹ {{ data.cost_per_sqft }}</p>
-</div>
+<p>Duration: {{ result.duration_days }} days</p>
 
-<div class="card">
-<h3>Total Cost</h3>
-<p>₹ {{ data.estimated_cost }}</p>
-</div>
-
-<div class="card">
-<h3>Duration</h3>
-<p>{{ data.duration_days }} days</p>
-</div>
-
-</div>
-
-<!-- MATERIALS -->
-<div class="card">
-<h2>🧱 Materials</h2>
-<ul>
-<li>Cement: {{ data.cement_bags }} bags</li>
-<li>Steel: {{ data.steel_kg }} kg</li>
-</ul>
-</div>
-
-<!-- BOQ TABLE -->
-<div class="card">
-<h2>📋 BOQ Table</h2>
-
-<table>
-<tr>
-<th>Item</th>
-<th>Unit</th>
-<th>Qty</th>
-<th>Rate</th>
-<th>Cost</th>
-</tr>
-
-{% for item in data.boq %}
-<tr>
-<td>{{ item.item }}</td>
-<td>{{ item.unit }}</td>
-<td>{{ item.quantity }}</td>
-<td>{{ item.rate }}</td>
-<td>{{ item.cost }}</td>
-</tr>
-{% endfor %}
-
-</table>
-
-</div>
-
-<!-- AI OUTPUT -->
-<div class="card">
-<h2>🤖 AI Explanation</h2>
-<pre>{{ explanation }}</pre>
-</div>
-
-<a href="/" class="btn">⬅ Back</a>
+<h3>Live Rates</h3>
+<p>Cement: ₹{{ result.rates.cement_per_bag }}</p>
+<p>Steel: ₹{{ result.rates.steel_per_kg }}</p>
 
 </div>
 
