@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sajal's Estimator</title>
 <link rel="stylesheet" href="/static/style.css">
 </head>
-
 <body>
 
 <div class="container">
 
-<h1>🏗️ Sajal's Estimator</h1>
-<p class="subtitle">AI Assistant: Estimator</p>
+<h1>Sajal's Estimator</h1>
 
-<div class="card">
-
-<form action="/estimate/estimate-ui/" method="post">
-
-<textarea name="text" placeholder="Describe your project..."></textarea>
-
-<div class="grid">
-<input name="builtUpArea" placeholder="Area (sq ft)">
-<input name="floors" placeholder="Floors">
-<input name="budget" placeholder="Budget ₹">
-<input name="duration" placeholder="Duration (days)">
-</div>
-
-<button class="btn">Estimate Project</button>
-
+<form action="/estimate/" method="post">
+<textarea name="text" placeholder="Enter project details"></textarea>
+<input name="budget" placeholder="Budget (optional)">
+<input name="duration" placeholder="Duration days (optional)">
+<button>Generate</button>
 </form>
 
-</div>
+<hr>
 
-<div class="card">
-
-<h3>📊 Download BOQ</h3>
-
-<form action="/excel/" method="post">
-<input name="builtUpArea" placeholder="Area">
-<input name="floors" placeholder="Floors">
-<button class="btn">Download Excel</button>
+<form action="/pdf/upload" method="post" enctype="multipart/form-data">
+<input type="file" name="file">
+<button>Upload PDF</button>
 </form>
 
-</div>
+<form action="/cad/upload" method="post" enctype="multipart/form-data">
+<input type="file" name="file">
+<button>Upload CAD</button>
+</form>
 
 </div>
 
