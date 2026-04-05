@@ -1,27 +1,37 @@
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import os
 
 from routes import estimate, excel, cad, pdf
 
 app = FastAPI()
 
-# Mount static folder
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# 🔹 Get base directory (important for Render)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Setup templates
-templates = Jinja2Templates(directory="templates")
+# 🔹 Static files (CSS, JS)
+app.mount(
+    "/static",
+    StaticFiles(directory=os.path.join(BASE_DIR, "static")),
+    name="static"
+)
 
-# Include routers
+# 🔹 Templates (HTML)
+templates = Jinja2Templates(
+    directory=os.path.join(BASE_DIR, "templates")
+)
+
+# 🔹 Include all routes
 app.include_router(estimate.router)
 app.include_router(excel.router)
 app.include_router(cad.router)
 app.include_router(pdf.router)
 
-
+# 🔹 Home route (UI)
 @app.get("/")
 def home(request: Request):
     return templates.TemplateResponse(
-        name="index.html",              
-        context={"request": request}    
+        name="index.html",
+        context={"request": request}
     )
