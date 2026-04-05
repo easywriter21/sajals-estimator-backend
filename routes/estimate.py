@@ -5,9 +5,24 @@ from utils.master_estimator import master_estimate
 router = APIRouter()
 
 @router.post("/estimate/", response_class=HTMLResponse)
-async def estimate(text: str = Form(...)):
+async def estimate(
+    text: str = Form(...),
+    cement: float = Form(...),
+    steel: float = Form(...),
+    sand: float = Form(...),
+    aggregate: float = Form(...),
+    labour: float = Form(...)
+):
     try:
-        result = master_estimate(text)
+        prices = {
+            "cement": cement,
+            "steel": steel,
+            "sand": sand,
+            "aggregate": aggregate,
+            "labour": labour
+        }
+
+        result = master_estimate(text, prices)
 
         return f"""
         <html>
