@@ -6,13 +6,25 @@
 </head>
 <body>
 
-<h1>Sajal's Estimator</h1>
+<div class="container">
+    <h1>Sajal's Estimator</h1>
 
-<form action="/estimate/" method="post">
-    <textarea name="text" placeholder="Enter project details..." required></textarea>
-    <br><br>
-    <button type="submit">Generate Estimate</button>
-</form>
+    <form action="/estimate/" method="post">
+
+        <textarea name="text" placeholder="Enter project details (e.g. 1200 sq ft house)" required></textarea>
+
+        <h3>Material Prices</h3>
+
+        <input type="number" name="cement" placeholder="Cement price per bag" required><br><br>
+        <input type="number" name="steel" placeholder="Steel price per ton" required><br><br>
+        <input type="number" name="sand" placeholder="Sand price per unit" required><br><br>
+        <input type="number" name="aggregate" placeholder="Aggregate price per unit" required><br><br>
+        <input type="number" name="labour" placeholder="Labour cost per day" required><br><br>
+
+        <button type="submit">Generate Estimate</button>
+
+    </form>
+</div>
 
 </body>
 </html>
