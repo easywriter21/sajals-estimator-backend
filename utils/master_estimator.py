@@ -1,29 +1,22 @@
-import re
-from utils.ai_engine import generate_estimate
+def master_estimate(text: str, prices: dict):
 
-def extract_area(text):
-    match = re.search(r'(\d{3,5})\s*sq\s*ft', text.lower())
-    return int(match.group(1)) if match else 1200
+    # Dummy calculation logic (replace later with advanced AI)
+    area = 1200  # assume for now or extract from text
 
+    cement_cost = 400 * prices["cement"]
+    steel_cost = 2 * prices["steel"]
+    sand_cost = 100 * prices["sand"]
+    aggregate_cost = 120 * prices["aggregate"]
+    labour_cost = 50 * prices["labour"]
 
-def apply_constraints(result, budget=None, duration=None):
+    total_cost = cement_cost + steel_cost + sand_cost + aggregate_cost + labour_cost
 
-    if budget:
-        result["total_cost"] = int(budget)
-        result["material_cost"] = int(budget * 0.65)
-        result["labour_cost"] = int(budget * 0.35)
-
-    if duration:
-        factor = result["duration_days"] / duration
-        result["duration_days"] = duration
-        result["total_cost"] = int(result["total_cost"] * factor * 1.1)
-
-    return result
-
-
-def master_estimate(text, budget=None, duration=None):
-
-    area = extract_area(text)
-    result = generate_estimate(f"{area} sq ft building")
-
-    return apply_constraints(result, budget, duration)
+    return {
+        "input": text,
+        "cement_cost": cement_cost,
+        "steel_cost": steel_cost,
+        "sand_cost": sand_cost,
+        "aggregate_cost": aggregate_cost,
+        "labour_cost": labour_cost,
+        "total_cost": total_cost
+    }
