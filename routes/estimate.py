@@ -1,21 +1,24 @@
-from fastapi import APIRouter, Form, Request
-from fastapi.templating import Jinja2Templates
-
+from fastapi import APIRouter, Form
+from fastapi.responses import HTMLResponse
 from utils.master_estimator import master_estimate
 
 router = APIRouter()
-templates = Jinja2Templates(directory="templates")
 
-@router.post("/estimate/")
-async def estimate(
-    request: Request,
-    text: str = Form(""),
-    budget: float = Form(None),
-    duration: int = Form(None)
-):
-    result = master_estimate(text, budget, duration)
+@router.post("/estimate/", response_class=HTMLResponse)
+async def estimate(text: str = Form(...)):
+    try:
+        result = master_estimate(text)
 
-    return templates.TemplateResponse("result.html", {
-        "request": request,
-        "result": result
-    })
+        return f"""
+        <html>
+        <body>
+            <h2>Estimation Result</h2>
+            <pre>{result}</pre>
+            <br>
+            <a href="/">Back</a>
+        </body>
+        </html>
+        """
+
+    except Exception as e:
+        return f"<h3>Error: {str(e)}</h3>"
