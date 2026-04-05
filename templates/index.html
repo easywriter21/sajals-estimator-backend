@@ -1,34 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/static/style.css">
+    <title>Sajal's Estimator</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
-<div class="container">
 
 <h1>Sajal's Estimator</h1>
 
 <form action="/estimate/" method="post">
-<textarea name="text" placeholder="Enter project details"></textarea>
-<input name="budget" placeholder="Budget (optional)">
-<input name="duration" placeholder="Duration days (optional)">
-<button>Generate</button>
+    <textarea name="text" placeholder="Enter project details..." required></textarea>
+    <br><br>
+    <button type="submit">Generate Estimate</button>
 </form>
-
-<hr>
-
-<form action="/pdf/upload" method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<button>Upload PDF</button>
-</form>
-
-<form action="/cad/upload" method="post" enctype="multipart/form-data">
-<input type="file" name="file">
-<button>Upload CAD</button>
-</form>
-
-</div>
 
 </body>
 </html>
