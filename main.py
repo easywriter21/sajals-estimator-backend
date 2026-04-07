@@ -1,33 +1,22 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+import os
+
 from routes.estimate import router as estimate_router
 
 app = FastAPI()
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Static + Templates
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+
+# Routes
 app.include_router(estimate_router)
 
 
-@app.get("/", response_class=HTMLResponse)
-async def home():
-    return """
-    <html>
-    <head>
-        <title>Sajal Estimator</title>
-    </head>
-    <body style="font-family: Arial; text-align:center; margin-top:50px;">
-        <h1>Sajal Estimator</h1>
-
-        <form action="/estimate/" method="post">
-            <textarea name="text" placeholder="Enter project details" required></textarea><br><br>
-
-            <input type="number" name="cement" placeholder="Cement price" required><br><br>
-            <input type="number" name="steel" placeholder="Steel price" required><br><br>
-            <input type="number" name="sand" placeholder="Sand price" required><br><br>
-            <input type="number" name="aggregate" placeholder="Aggregate price" required><br><br>
-            <input type="number" name="labour" placeholder="Labour cost" required><br><br>
-
-            <button type="submit">Estimate</button>
-        </form>
-    </body>
-    </html>
-    """
+@app.get("/")
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
