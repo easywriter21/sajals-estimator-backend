@@ -4,6 +4,7 @@ from utils.master_estimator import master_estimate
 
 router = APIRouter()
 
+
 @router.post("/estimate/", response_class=HTMLResponse)
 async def estimate(
     text: str = Form(...),
@@ -26,11 +27,11 @@ async def estimate(
 
         return f"""
         <html>
-        <body>
+        <body style="font-family: Arial; text-align:center;">
             <h2>Estimation Result</h2>
             <pre>{result}</pre>
             <br>
-            <a href="/">Back</a>
+            <a href="/">⬅ Back</a>
         </body>
         </html>
         """
