@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sajal's Estimator</title>
+    <title>Estimator</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>Sajal's Estimator</h1>
+    <h1>Smart Estimator</h1>
 
-    <form action="/estimate/" method="post">
+    <form action="/estimate/" method="post" enctype="multipart/form-data">
 
-        <textarea name="text" placeholder="Enter project details (e.g. 1200 sq ft house)" required></textarea>
+        <input type="number" name="area" placeholder="Area (sq ft)">
+        <input type="number" name="floors" placeholder="Floors">
 
-        <h3>Material Prices</h3>
+        <input type="file" name="pdf" accept=".pdf">
 
-        <input type="number" name="cement" placeholder="Cement price per bag" required><br><br>
-        <input type="number" name="steel" placeholder="Steel price per ton" required><br><br>
-        <input type="number" name="sand" placeholder="Sand price per unit" required><br><br>
-        <input type="number" name="aggregate" placeholder="Aggregate price per unit" required><br><br>
-        <input type="number" name="labour" placeholder="Labour cost per day" required><br><br>
+        <h3>Material Prices (Optional)</h3>
+        <input type="number" name="cement" placeholder="Cement price">
+        <input type="number" name="steel" placeholder="Steel price">
+        <input type="number" name="sand" placeholder="Sand price">
+        <input type="number" name="aggregate" placeholder="Aggregate price">
+        <input type="number" name="labour" placeholder="Labour rate">
 
-        <button type="submit">Generate Estimate</button>
+        <h3>Constraints</h3>
+        <input type="number" name="budget" placeholder="Budget">
+        <input type="number" name="time_limit" placeholder="Time">
+
+        <button type="submit">Calculate</button>
 
     </form>
 </div>
