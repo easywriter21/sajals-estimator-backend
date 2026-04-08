@@ -12,7 +12,7 @@ def download_excel():
     ws.title = "BOQ"
 
     ws.append(["Item", "Value"])
-    ws.append(["Sample", 1000])
+    ws.append(["Generated", "Estimator Result"])
 
     file_path = "estimate.xlsx"
     wb.save(file_path)
