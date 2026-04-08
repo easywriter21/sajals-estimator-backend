@@ -1,10 +1,20 @@
 from fastapi import APIRouter
 from fastapi.responses import FileResponse
-from utils.cost_calculator import generate_excel
+from openpyxl import Workbook
 
 router = APIRouter()
 
-@router.post("/excel/")
-def excel():
-    path = generate_excel()
-    return FileResponse(path, filename="Sajals_Estimator_BOQ.xlsx")
+@router.post("/download-excel/")
+def download_excel():
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "BOQ"
+
+    ws.append(["Item", "Value"])
+    ws.append(["Sample", 1000])
+
+    file_path = "estimate.xlsx"
+    wb.save(file_path)
+
+    return FileResponse(file_path, filename="estimate.xlsx")
