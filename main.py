@@ -26,6 +26,11 @@ templates = Jinja2Templates(
 app.include_router(estimate_router)
 app.include_router(excel_router)
 
+# 🔥 TEST ROUTE (ADD THIS)
+@app.get("/test")
+def test():
+    return {"status": "OK", "message": "Backend is working"}
+
 # Home route
 @app.get("/")
 async def home(request: Request):
