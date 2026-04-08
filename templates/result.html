@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="/static/style.css">
+    <title>Result</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
 <div class="container">
+    <h1>Estimation Result</h1>
 
-<h1>Result</h1>
+    <table>
+        {% for key, value in result.items() %}
+        <tr>
+            <td><b>{{ key }}</b></td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 
-<p>Total Cost: ₹{{ result.total_cost }}</p>
-<p>Material: ₹{{ result.material_cost }}</p>
-<p>Labour: ₹{{ result.labour_cost }}</p>
+    <form action="/download-excel/" method="post">
+        <button>Download Excel</button>
+    </form>
 
-<p>Cement: {{ result.cement_bags }} bags</p>
-<p>Steel: {{ result.steel_kg }} kg</p>
-
-<p>Duration: {{ result.duration_days }} days</p>
-
-<h3>Live Rates</h3>
-<p>Cement: ₹{{ result.rates.cement_per_bag }}</p>
-<p>Steel: ₹{{ result.rates.steel_per_kg }}</p>
-
+    <a href="/">Back</a>
 </div>
 
 </body>
