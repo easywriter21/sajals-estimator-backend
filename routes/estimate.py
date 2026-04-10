@@ -1,7 +1,6 @@
-from fastapi import APIRouter, Form, Request, UploadFile, File
+from fastapi import APIRouter, Form, Request
 from fastapi.templating import Jinja2Templates
 from utils.master_estimator import master_estimate
-from utils.pdf_parser import extract_data_from_pdf
 import os
 
 router = APIRouter()
@@ -12,8 +11,8 @@ templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 @router.post("/estimate/")
 async def estimate(
     request: Request,
-    area: float = Form(None),
-    floors: int = Form(None),
+    area: float = Form(...),
+    floors: int = Form(...),
 
     cement: float = Form(None),
     steel: float = Form(None),
@@ -22,28 +21,10 @@ async def estimate(
     labour: float = Form(None),
 
     budget: float = Form(None),
-    time_limit: int = Form(None),
-
-    pdf: UploadFile = File(None)
+    time_limit: int = Form(None)
 ):
 
-    # PDF extraction
-    if pdf:
-        content = await pdf.read()
-        extracted_area, extracted_floors = extract_data_from_pdf(content)
-
-        if extracted_area:
-            area = extracted_area
-        if extracted_floors:
-            floors = extracted_floors
-
-    if not area or not floors:
-        return templates.TemplateResponse("result.html", {
-            "request": request,
-            "result": {"Error": "Area or Floors missing"}
-        })
-
-    # Default Indian Rates
+    # Default Indian rates
     default_rates = {
         "cement": 350,
         "steel": 65,
@@ -52,7 +33,7 @@ async def estimate(
         "labour": 400
     }
 
-    # Use user input or fallback
+    # Use user input or default
     rates = {
         "cement": cement if cement else default_rates["cement"],
         "steel": steel if steel else default_rates["steel"],
@@ -63,7 +44,10 @@ async def estimate(
 
     result = master_estimate(area, floors, rates, budget, time_limit)
 
-    return templates.TemplateResponse("result.html", {
-        "request": request,
-        "result": result
-    })
+    return templates.TemplateResponse(
+        "result.html",
+        {
+            "request": request,   # ✅ FIXED
+            "result": result      # ✅ FIXED
+        }
+    )
